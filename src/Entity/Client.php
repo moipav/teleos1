@@ -22,6 +22,9 @@ class Client
     #[ORM\ManyToOne(inversedBy: 'clients')]
     private ?Address $address = null;
 
+    #[ORM\ManyToOne(inversedBy: 'client')]
+    private ?Tariff $tariff = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Client
     public function setAddress(?Address $address): static
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getTariff(): ?Tariff
+    {
+        return $this->tariff;
+    }
+
+    public function setTariff(?Tariff $tariff): static
+    {
+        $this->tariff = $tariff;
 
         return $this;
     }
