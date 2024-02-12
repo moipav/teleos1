@@ -45,4 +45,36 @@ class ClientRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    /**
+     * @param int $clientId
+     * @return Client|null
+     */
+    public function findOneByIdJoinedToTariff(int $clientId): ?Client
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT c, t
+    FROM App\Entity\Client c
+    INNER JOIN c.tariff t
+    WHERE c.id =:id'
+        )->setParameter('id', $clientId);
+
+        return $query->getOneOrNullResult();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findAllJoinedTariffAndAddress()
+    {
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT c, t, a
+            FROM App\Entity\Client c
+            INNER JOIN c.tariff t
+            INNER JOIN c.address a'
+        );
+        return $query->getResult();
+    }
 }

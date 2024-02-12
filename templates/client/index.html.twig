@@ -9,11 +9,29 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <table>
-        {# здесь будет вывод клиентов #}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Тариф</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%  for client in clients %}
+        <tr>
+            <th scope="row">{{ client.id }}</th>
+            <td>{{ client.ln }}</td>
+            <td>{{ client.fn }}</td>
+            <td>{{ client.address.street }}, {{ client.address.number }}</td>
+            <td>{{ client.tariff.name }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
     </table>
 </div>
 {% endblock %}

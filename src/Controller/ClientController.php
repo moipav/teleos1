@@ -12,10 +12,9 @@ class ClientController extends AbstractController
     #[Route('/client', name: 'app_client')]
     public function index(\Doctrine\Persistence\ManagerRegistry $doctrine): Response
     {
-        $clients = $doctrine->getRepository(Client::class)->findAll();
-
+        $clients = $doctrine->getRepository(Client::class)->findAllJoinedTariffAndAddress();
+//dd($clients);
         return $this->render('client/index.html.twig', [
-            'controller_name' => 'ClientController',
             'clients'=>$clients
         ]);
     }
