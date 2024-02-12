@@ -9,12 +9,28 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Название</th>
+            <th scope="col">Скорость</th>
+            <th scope="col">Стоимость</th>
+{#            <th scope="col">Тариф</th>#}
+        </tr>
+        </thead>
+        <tbody>
+        {%  for tariff in tariffs %}
+            <tr>
+                <th scope="row">{{ tariff.id }}</th>
+                <td>{{ tariff.name }}</td>
+                <td>{{ tariff.speed }}</td>
+                <td>{{ tariff.price }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/OSPanel/domains/teleos1/src/Controller/TariffController.php'|file_link(0) }}">src/Controller/TariffController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/OSPanel/domains/teleos1/templates/tariff/index.html.twig'|file_link(0) }}">templates/tariff/index.html.twig</a></code></li>
-    </ul>
+    <a class="btn btn-success" href="#" role="button">Добавить тариф</a>
 </div>
 {% endblock %}
