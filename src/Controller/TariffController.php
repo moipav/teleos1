@@ -19,5 +19,9 @@ class TariffController extends AbstractController
         ]);
     }
 
-
+    #[Route('/tariff/create', name: 'app_tariff_create')]
+    public function createTariff(): Response
+    {
+        return $this->render('tariff/create.html.twig');
+    }
 }
