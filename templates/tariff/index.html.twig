@@ -16,6 +16,7 @@
             <th scope="col">Название</th>
             <th scope="col">Скорость</th>
             <th scope="col">Стоимость</th>
+            <th scope="col">дуйствия</th>
 {#            <th scope="col">Тариф</th>#}
         </tr>
         </thead>
@@ -26,6 +27,8 @@
                 <td>{{ tariff.name }}</td>
                 <td>{{ tariff.speed }}</td>
                 <td>{{ tariff.price }}</td>
+                <td><a class="btn btn-danger" href="{{ path('app_tariff_delete', { id: tariff.id }) }}" role="button"> удалить</a>
+                    <a class="btn btn-warning" href="{{ path('app_tariff_update', {id: tariff.id}) }}" role="button">изменить</a> </td>
             </tr>
         {% endfor %}
         </tbody>

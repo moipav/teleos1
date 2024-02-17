@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Tariff;
 use App\Form\TariffType;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -12,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
 
 class TariffController extends AbstractController
 {
@@ -31,7 +29,7 @@ class TariffController extends AbstractController
      * @throws ORMException
      */
     #[Route('/tariff/create', name: 'app_tariff_create')]
-    public function createTariff(EntityManagerInterface $entityManager, Environment $twig, Request $request): Response
+    public function createTariff(EntityManagerInterface $entityManager, Request $request): Response
     {
         $tariff = new Tariff();
 
@@ -43,7 +41,7 @@ class TariffController extends AbstractController
 
             $entityManager->persist($tariff);
             $entityManager->flush();
-            $this->redirectToRoute('app_tariff_create');
+            return $this->redirectToRoute('app_tariff_create');
         }
         return $this->render('tariff/create.html.twig', [
             'tariff_form' => $form->createView()
@@ -51,4 +49,33 @@ class TariffController extends AbstractController
 
     }
 
+    #[Route('/tariff/delete/{id}', name: 'app_tariff_delete')]
+    public function deleteTariff(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $tariff = $entityManager->getRepository(Tariff::class)->find($id);
+        $entityManager->remove($tariff);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_tariff');
+    }
+
+    #[Route('tariff/update/{id}', name: 'app_tariff_update')]
+    public function updateTariff(EntityManagerInterface $entityManager, Request $request, int $id): Response
+    {
+        $tariff = $entityManager->getRepository(Tariff::class)->find($id);
+
+        $form = $this->createForm(TariffType::class, $tariff);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $tariff = $form->getData();
+
+            $entityManager->persist($tariff);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_tariff_create');
+        }
+        return $this->render('tariff/create.html.twig', [
+            'tariff_form' => $form->createView()
+        ]);
+
+    }
 }
