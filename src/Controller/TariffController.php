@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,19 +34,7 @@ class TariffController extends AbstractController
     {
         $tariff = new Tariff();
 
-        $form = $this->createForm(TariffType::class, $tariff);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $tariff = $form->getData();
-
-            $entityManager->persist($tariff);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_tariff_create');
-        }
-        return $this->render('tariff/create.html.twig', [
-            'tariff_form' => $form->createView()
-        ]);
+        return $this->extracted($tariff, $request, $entityManager);
 
     }
 
@@ -63,6 +52,18 @@ class TariffController extends AbstractController
     {
         $tariff = $entityManager->getRepository(Tariff::class)->find($id);
 
+        return $this->extracted($tariff, $request, $entityManager);
+
+    }
+
+    /**
+     * @param Tariff $tariff
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return RedirectResponse|Response
+     */
+    public function extracted(Tariff $tariff, Request $request, EntityManagerInterface $entityManager): Response|RedirectResponse
+    {
         $form = $this->createForm(TariffType::class, $tariff);
         $form->handleRequest($request);
 
@@ -71,11 +72,10 @@ class TariffController extends AbstractController
 
             $entityManager->persist($tariff);
             $entityManager->flush();
-            return $this->redirectToRoute('app_tariff_create');
+            return $this->redirectToRoute('app_tariff');
         }
         return $this->render('tariff/create.html.twig', [
             'tariff_form' => $form->createView()
         ]);
-
     }
 }
