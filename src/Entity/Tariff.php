@@ -6,6 +6,7 @@ use App\Repository\TariffRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: TariffRepository::class)]
 class Tariff
@@ -13,15 +14,19 @@ class Tariff
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[NotBlank]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[NotBlank]
     private ?int $speed = null;
 
     #[ORM\Column]
+    #[NotBlank]
     private ?int $price = null;
 
     #[ORM\OneToMany(targetEntity: Client::class, mappedBy: 'tariff')]
