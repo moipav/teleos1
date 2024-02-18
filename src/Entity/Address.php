@@ -6,6 +6,7 @@ use App\Repository\AddressRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address
@@ -19,9 +20,11 @@ class Address
     private Collection $clients;
 
     #[ORM\Column(length: 255)]
+    #[NotBlank]
     private ?string $street = null;
 
     #[ORM\Column]
+    #[NotBlank]
     private ?int $number = null;
 
     public function __construct()

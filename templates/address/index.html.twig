@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AddressController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
 <style>
@@ -8,13 +8,28 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="example-wrapper">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Улица</th>
+                <th scope="col">№ дома</th>
+                <th scope="col">дуйствия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {%  for address in addresses %}
+                <tr>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/OSPanel/domains/teleos1/src/Controller/AddressController.php'|file_link(0) }}">src/Controller/AddressController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/OSPanel/domains/teleos1/templates/address/index.html.twig'|file_link(0) }}">templates/address/index.html.twig</a></code></li>
-    </ul>
-</div>
+                    <td>{{ address.street }}</td>
+                    <td>{{ address.number }}</td>
+
+                    <td><a class="btn btn-warning" href="{{ path('app_address_update', {id: address.id}) }}" role="button">изменить</a> </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-success" href="{{ path('app_address_create') }}" role="button">Добавить адрес</a>
+    </div>
 {% endblock %}

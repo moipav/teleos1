@@ -62,7 +62,7 @@ class TariffController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return RedirectResponse|Response
      */
-    public function extracted(Tariff $tariff, Request $request, EntityManagerInterface $entityManager): Response|RedirectResponse
+    private function extracted(Tariff $tariff, Request $request, EntityManagerInterface $entityManager): Response|RedirectResponse
     {
         $form = $this->createForm(TariffType::class, $tariff);
         $form->handleRequest($request);
