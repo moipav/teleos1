@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -89,5 +90,10 @@ class Address
         $this->number = $number;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getStreet() .', ' . $this->getNumber();
     }
 }

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ClientController!{% endblock %}
+{% block body %}
+
+    <h2>{{ title }}</h2>
+
+    {{ form_start(client_form) }}
+        {{ form_errors(client_form) }}
+        {{ form_row(client_form.ln) }}
+        {{ form_row(client_form.fn) }}
+    {{ form_row(client_form.address) }}
+
+{{ form_end(client_form) }}
+{#    {{ form(client_form) }}#}
+{% endblock %}

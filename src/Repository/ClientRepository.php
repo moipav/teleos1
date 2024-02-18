@@ -56,9 +56,9 @@ class ClientRepository extends ServiceEntityRepository
 
         $query = $entityManager->createQuery(
             'SELECT c, t
-    FROM App\Entity\Client c
-    INNER JOIN c.tariff t
-    WHERE c.id =:id'
+            FROM App\Entity\Client c
+            INNER JOIN c.tariff t
+            WHERE c.id =:id'
         )->setParameter('id', $clientId);
 
         return $query->getOneOrNullResult();
@@ -67,7 +67,7 @@ class ClientRepository extends ServiceEntityRepository
     /**
      * @return mixed
      */
-    public function findAllJoinedTariffAndAddress()
+    public function findAllJoinedTariffAndAddress(): mixed
     {
         $query = $this->getEntityManager()->createQuery(
             'SELECT c, t, a
@@ -77,4 +77,5 @@ class ClientRepository extends ServiceEntityRepository
         );
         return $query->getResult();
     }
+
 }

@@ -38,15 +38,6 @@ class TariffController extends AbstractController
 
     }
 
-    #[Route('/tariff/delete/{id}', name: 'app_tariff_delete')]
-    public function deleteTariff(EntityManagerInterface $entityManager, int $id): Response
-    {
-        $tariff = $entityManager->getRepository(Tariff::class)->find($id);
-        $entityManager->remove($tariff);
-        $entityManager->flush();
-        return $this->redirectToRoute('app_tariff');
-    }
-
     #[Route('tariff/update/{id}', name: 'app_tariff_update')]
     public function updateTariff(EntityManagerInterface $entityManager, Request $request, int $id): Response
     {
@@ -77,5 +68,14 @@ class TariffController extends AbstractController
         return $this->render('tariff/create.html.twig', [
             'tariff_form' => $form->createView()
         ]);
+    }
+
+    #[Route('/tariff/delete/{id}', name: 'app_tariff_delete')]
+    public function deleteTariff(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $tariff = $entityManager->getRepository(Tariff::class)->find($id);
+        $entityManager->remove($tariff);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_tariff');
     }
 }

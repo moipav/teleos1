@@ -19,6 +19,7 @@
             <th scope="col">Имя</th>
             <th scope="col">Адрес</th>
             <th scope="col">Тариф</th>
+            <th scope="col">Действия</th>
         </tr>
         </thead>
         <tbody>
@@ -29,8 +30,10 @@
             <td>{{ client.fn }}</td>
             <td>{{ client.address.street }}, {{ client.address.number }}</td>
             <td>{{ client.tariff.name }}</td>
+            <td><a class="btn btn-warning" href="{{ path('app_client_update', {id: client.id}) }}">Изменить</a> </td>
         </tr>
         {% endfor %}
+        <a class="btn btn-success" href="{{ path('app_client_create') }}">Добавить нового</a>
         </tbody>
     </table>
 </div>

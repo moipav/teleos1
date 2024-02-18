@@ -107,4 +107,9 @@ class Tariff
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->getName() . ', скорость: ' . $this->getSpeed() .', стоимость: ' . $this->getPrice();
+    }
 }
